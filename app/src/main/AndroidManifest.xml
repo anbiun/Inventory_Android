@@ -8,31 +8,30 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/jlicon"
+        android:icon="@mipmap/ic_launcher"
         android:label="JL Products CO.,LTD."
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".Login"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="Stock">
+            android:label="Stock"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Menu"
-            android:theme="@style/AppTheme"
-            android:label="Menu"
-            />
-
-        <activity android:name=".Scan"
+        <activity
+            android:name=".Scan"
             android:label="เบิกวัสดุ"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            />
-
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Main"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

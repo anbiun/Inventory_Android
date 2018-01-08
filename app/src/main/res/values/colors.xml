@@ -7,4 +7,5 @@
     <color name="black">#343434</color>
     <color name="aqua">#689ACA</color>
     <color name="hint">#b4b4b4</color>
+    <color name="overlay">#7dffffff</color>
 </resources>

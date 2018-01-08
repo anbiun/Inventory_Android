@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="InputText.Second" parent="AppTheme">
+        <item name="android:textColorHint">@color/hint</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+</resources>

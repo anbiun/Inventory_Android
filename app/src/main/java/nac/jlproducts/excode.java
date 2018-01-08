@@ -1,4 +1,4 @@
-package nac;
+package nac.jlproducts;
 
 /**
  * Created by nac on 22/12/2560.
@@ -16,5 +16,6 @@ public class excode {
     public Integer Getcode() {
         return this.curCode;
     }
+
 }
 

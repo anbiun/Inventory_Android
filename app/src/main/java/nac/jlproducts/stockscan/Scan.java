@@ -1,5 +1,6 @@
 package nac.jlproducts.stockscan;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;

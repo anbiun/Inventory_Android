@@ -1,5 +1,6 @@
 package nac.jlproducts.stockscan;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -24,7 +25,8 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.util.HashMap;
 import java.util.Map;
 
-import nac.excode;
+import nac.jlproducts.module;
+import nac.jlproducts.excode;
 
 public class Login extends AppCompatActivity{
     String TAG = "";
@@ -104,15 +106,6 @@ public class Login extends AppCompatActivity{
     public void Qry() {
         try {
             request = new SoapObject(NAMESPACE,METHOD_NAME);
-            //Map<String, Label> map = new HashMap<String, Label>();
-            /*
-            for ( String key : ParamList.keySet() ) {
-
-            }
-
-            for ( String value : ParamList.values() ) {
-            }
-**/
 
             for ( Map.Entry<String, String> entry : ParamList.entrySet() ) {
                 String key = entry.getKey();
@@ -160,9 +153,8 @@ public class Login extends AppCompatActivity{
             dialog.dismiss();
             JSONArray JAR = new JSONArray(resultString.toString());
             JSONObject JOB = JAR.getJSONObject(0);
-            getVal = JOB.getString("UserName");
-            Intent newPage = new Intent(this,Scan.class);
-            newPage.putExtra("UserName",getVal);
+            module.UserName = JOB.getString("UserName");
+            Intent newPage = new Intent(this,Main.class);
             startActivity(newPage);
 
         } catch (JSONException e) {
