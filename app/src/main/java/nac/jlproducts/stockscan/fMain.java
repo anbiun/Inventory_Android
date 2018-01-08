@@ -5,4 +5,5 @@ package nac.jlproducts.stockscan;
  */
 
 public class fMain {
+
 }
