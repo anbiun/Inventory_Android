@@ -8,4 +8,7 @@
     <color name="aqua">#689ACA</color>
     <color name="hint">#b4b4b4</color>
     <color name="overlay">#7dffffff</color>
+    <color name="foreground_material_light">#d73030</color>
+    <color name="text_color_secondary">#666798</color>
+    <color name="lowSecond">#9395cc</color>
 </resources>

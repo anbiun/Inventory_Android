@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v4.app.SupportActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -46,7 +47,10 @@ public class module {
     private static SoapObject Request = null;
     public static SoapPrimitive ResultString = null;
 
+    private static boolean doubleBack2Exit = false;
+
     public static void Qry() {
+        //081
         try {
             Request = new SoapObject(NAMESPACE,METHOD_NAME);
 
@@ -55,19 +59,23 @@ public class module {
                 String value = entry.getValue();
                 Request.addProperty(key,value);
             }
-
+        //557
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             soapEnvelope.dotNet = true;
             soapEnvelope.setOutputSoapObject(Request);
-
+        //4494
             HttpTransportSE transport = new HttpTransportSE(URL);
 
             transport.call(SOAP_ACTION, soapEnvelope);
             ResultString = (SoapPrimitive) soapEnvelope.getResponse();
 
             Log.i(TAG, "Result From WebService: " + ResultString);
-            xcode.setCode(excode.Success);
-            //excode.set(excode.);
+
+            if (ResultString.toString().equals("[]")) {
+                xcode.setCode(xcode.Notfound);
+            } else {
+                xcode.setCode(xcode.Success);
+            }
         } catch (Exception ex) {
             if (ex.getMessage().contains("unexpected end of stream")) {
                 xcode.setCode(xcode.Cantconnect);
@@ -105,6 +113,22 @@ public class module {
             result += StringArr[i].toString() + " ";
         }
         return result;
+    }
+    public static boolean backPress() {
+        if (doubleBack2Exit) {
+            return true;
+        }
+        else {
+            doubleBack2Exit = true;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBack2Exit=false;
+                }
+            }, 2000);
+            return  false;
+        }
     }
 }
 

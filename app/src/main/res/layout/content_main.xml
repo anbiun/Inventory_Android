@@ -41,7 +41,7 @@
             android:layout_weight="1"
             android:text="TextView"
             android:textAlignment="center"
-            android:textAppearance="@style/TextOverlay.Bold"
+            android:textAppearance="@style/Overlay.Bold"
             android:textColor="@color/white"
             android:textSize="32sp" />
     </LinearLayout>

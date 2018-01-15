@@ -1,12 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorSecond</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:colorForeground">@color/colorSecond</item>
 
         <!--
         <item name="windowActionBar">false</item>
@@ -41,15 +42,25 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    <style name="TextOverlay" parent="AppTheme">
+    <style name="Text" parent="AppTheme">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorSecond</item>
+    </style>
+    <style name="Overlay" parent="Text">
         <item name="android:gravity">center</item>
         <item name="android:shadowColor">@color/black</item>
         <item name="android:shadowDx">3</item>
         <item name="android:shadowDy">3</item>
         <item name="android:shadowRadius">6</item>
     </style>
-    <style name="TextOverlay.Bold" parent="TextOverlay">
+
+    <style name="Overlay.Bold" parent="Overlay">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextNormal" parent="Text">
+
     </style>
 
 

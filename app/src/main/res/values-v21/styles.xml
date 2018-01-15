@@ -4,4 +4,19 @@
         <item name="android:textColorHint">@color/hint</item>
         <item name="android:backgroundTint">@color/white</item>
     </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorSecond</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:colorForeground">@color/colorSecond</item>
+        <item name="android:navigationBarColor">@color/black</item>
+
+        <!--
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        -->
+    </style>
 </resources>

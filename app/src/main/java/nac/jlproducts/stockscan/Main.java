@@ -1,9 +1,7 @@
 package nac.jlproducts.stockscan;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,12 +11,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import nac.jlproducts.module;
 
-public class Main extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class Main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    Fragment fm = null;
+    FragmentTransaction ft = null;
+    //getFragmentManager().beginTransaction();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +38,13 @@ public class Main extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        TextView Welcome = (TextView) findViewById(R.id.tvWelcome);
-        Welcome.setText("สวัสดีคุณ " + module.UserName);
-        //displayChange(R.id.nav_scan);
+
+        View navHeader = navigationView.getHeaderView(0);
+        TextView tvWelcome = navHeader.findViewById(R.id.tv_nav_welcome);
+        tvWelcome.setText("สวัสดีคุณ " + module.UserName);
+
+        ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_main,new fMain()).commit();
     }
 
     @Override
@@ -48,7 +55,23 @@ public class Main extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
 
         } else {
-            super.onBackPressed();
+            ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.content_main,new fMain(),"main").commit();
+
+            Fragment fm = getFragmentManager().findFragmentByTag("main");
+            if (fm != null && fm.isVisible()) {
+                // add your code here
+                if (module.backPress() == false) {
+                    Toast.makeText(this,R.string.exit_cf, Toast.LENGTH_SHORT).show();
+                } else {
+                    finish();
+                }
+            }
+
+
+            if (getTitle().toString().equals(R.string.title_activity_main)) {
+
+            }
         }
     }
 
@@ -84,20 +107,28 @@ public class Main extends AppCompatActivity
     }
 
     public void displayChange(int id) {
-        Fragment fm = null;
+
         switch (id) {
-            case R.id.nav_scan:
+            case R.id.nav_requisition:
                 fm = new fReq();
                 break;
             case R.id.nav_changepwd:
-                fm = new fChangPwd();
+                break;
+            case R.id.nav_stock_tag:
+                fm = new fStock_Tag();
+                break;
+            case R.id.nav_log_requisition:
+                fm = new fLogReq();
+                break;
+            case R.id.nav_exit:
+                finish();
                 break;
         }
 
         if (fm != null) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.content_main, fm);
-            ft.commit();
+            //FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.content_main, fm).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

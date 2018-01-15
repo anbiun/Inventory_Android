@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">stockscan</string>
+    <string name="app_name">JL Inventory Management</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -14,8 +14,22 @@
         completions."
     </string>
     <string name="title_activity_main">JL Products.co.,ltd.</string>
-
+    <string name="company">@string/title_activity_main</string>
+    <string name="exit_cf">กดซ้ำเพื่อปิดแอพ</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+    //navString
+    <string name="nav_requisition">เบิกวัสดุ</string>
+    <string name="nav_stock">วัสดุคงคลัง</string>
+    <string name="nav_stock_tag">รายการ TagID</string>
+    <string name="nav_log_import">รายการนำเข้า</string>
+    <string name="nav_log_requisition">รายการเบิก</string>
+    <string name="nav_log_transfer">รายการโอนย้าย</string>
+    <string name="nav_changepwd">เปลี่ยนรหัสผ่าน</string>
+    //xcode
+    <string name="xcode_notfound">ไม่พบข้อมูล</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

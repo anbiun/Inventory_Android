@@ -3,6 +3,7 @@ package nac.jlproducts.stockscan;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,8 +55,6 @@ public class Login extends AppCompatActivity{
         //set object
         getUser = findViewById(R.id.txtUser);
         getPwd = findViewById(R.id.txtPwd);
-        currentPage = new Intent(Login.this,Login.class);
-        currentPage.putExtra("Page","Login");
 
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +66,7 @@ public class Login extends AppCompatActivity{
                 ParamList.put("UserID",UserID);
                 ParamList.put("UserPwd",UserPwd);
                 dialog = new ProgressDialog(Login.this);
+
 
                 AsyncCallWS task = new AsyncCallWS();
                 task.execute();
@@ -80,7 +80,6 @@ public class Login extends AppCompatActivity{
             dialog.setMessage("กำลังโหลด..");
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
-
             try {
                Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -97,7 +96,6 @@ public class Login extends AppCompatActivity{
         }
         @Override
         protected void onPostExecute(Void result) {
-
             Log.i(TAG, "onPostExecute");
             CheckLogin();
         }
@@ -138,47 +136,39 @@ public class Login extends AppCompatActivity{
 
     }
     public void CheckLogin(){
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+
         String getVal = "";
         if (EXCODE.Getcode() == EXCODE.Cantconnect){
-            dialog.dismiss();
             Toast.makeText(Login.this,"ติดต่อเครือข่ายไม่ได้",Toast.LENGTH_LONG).show();
             return;
-        } else if (EXCODE.Getcode() == 0 && resultString.toString().equals("[]")) {
-            dialog.dismiss();
+        } else if (EXCODE.Getcode() == EXCODE.Success && resultString.toString().equals("[]")) {
             Toast.makeText(Login.this,"ชื่อหรือรหัสผ่านไม่ถูกต้อง",Toast.LENGTH_LONG).show();
             return;
         }
 
         try {
-            dialog.dismiss();
             JSONArray JAR = new JSONArray(resultString.toString());
             JSONObject JOB = JAR.getJSONObject(0);
             module.UserName = JOB.getString("UserName");
             Intent newPage = new Intent(this,Main.class);
             startActivity(newPage);
+            finish();
 
         } catch (JSONException e) {
             Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
             Log.e(TAG,e.getMessage());
         }
     }
-    boolean doubleBackToExitPressedOnce = false;
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce || !currentPage.getStringExtra("Page").equals("Login")) {
+        if (module.backPress() == false) {
+            Toast.makeText(this, R.string.exit_cf, Toast.LENGTH_SHORT).show();
+        } else {
             super.onBackPressed();
-            return;
         }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "โปรดแตะอีกครั้งออกจากโปรแกรม", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
     }
 
 }

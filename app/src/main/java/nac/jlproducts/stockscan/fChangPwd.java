@@ -18,7 +18,7 @@ public class fChangPwd extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_login,container,false);
+        return inflater.inflate(R.layout.activity_main,container,false);
         //super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -28,8 +28,6 @@ public class fChangPwd extends Fragment {
         setObj();
     }
     private void setObj(){
-        EditText newPwd = getView().findViewById(R.id.txtUser);
-        EditText cfPwd = getView().findViewById(R.id.txtPwd);
 
     }
 }

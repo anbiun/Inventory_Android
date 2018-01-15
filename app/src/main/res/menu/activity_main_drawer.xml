@@ -1,38 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_scan"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="เบิกวัสดุ" />
+            android:id="@+id/nav_requisition"
+            android:icon="@android:drawable/stat_notify_more"
+            android:title="@string/nav_requisition" />
         <item
             android:id="@+id/nav_stock"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="วัสดุคงคลัง" />
+            android:icon="@android:drawable/ic_dialog_dialer"
+            android:title="@string/nav_stock" />
         <item
             android:id="@+id/nav_stock_tag"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="ตรวจสอบ TagID" />
+            android:icon="?android:attr/actionModeFindDrawable"
+            android:title="@string/nav_stock_tag" />
         <item
-            android:id="@+id/nav_changepwd"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="เปลี่ยนรหัสผ่าน" />
+            android:id="@+id/nav_log_import"
+            android:icon="@android:drawable/ic_media_next"
+            android:title="@string/nav_log_import" />
+        <item
+            android:id="@+id/nav_log_requisition"
+            android:icon="@android:drawable/ic_media_previous"
+            android:title="@string/nav_log_requisition" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+    <group
+        android:checkableBehavior="single"
+        android:menuCategory="alternative"
+        android:visible="false">
+
+        <item
+            android:id="@+id/m_area"
+            android:enabled="true"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="เมนู"
+            android:titleCondensed="Areas"
+            android:visible="true">
+            <menu>
+                <item
+                    android:id="@+id/nav_changepwd"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="@string/nav_changepwd" />
+                <item
+                    android:id="@+id/nav_exit"
+                    android:icon="@android:drawable/ic_lock_power_off"
+                    android:title="ออก" />
+            </menu>
+        </item>
+    </group>
 
 </menu>
+
