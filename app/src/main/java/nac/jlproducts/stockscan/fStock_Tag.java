@@ -128,15 +128,17 @@ public class fStock_Tag extends Fragment {
                 JSONObject c = JAR.getJSONObject((i));
                 map = new HashMap<String, String>();
 
-                map.put("r1col1", c.getString("TagID") + " " + c.getString("MatName"));
-                map.put("r1col2",c.getString("Unit1") + " " + c.getString("UnitName"));
-                map.put("r2col2",c.getString("LocName"));
+                map.put("cMat", c.getString("MatName"));
+                map.put("cAmount",c.getString("Unit1") + " " + c.getString("UnitName"));
+                map.put("cTagID",c.getString("TagID"));
+                //map.put("cImport",c.getString("ImportDate"));
+                map.put("cLoc",c.getString("LocName"));
 
                 try {
                     SimpleDateFormat dfm = new SimpleDateFormat("yyyy-MM-dd");
-                    Date importdate = dfm.parse(c.getString("ImportDate"));
+                    Date imDate = dfm.parse(c.getString("ImportDate"));
                     dfm.applyPattern("dd-MM-yyyy");
-                    map.put("r2col1","วันที่นำเข้า " + dfm.format(importdate));
+                    map.put("cImDate","วันที่นำเข้า : " + dfm.format(imDate));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -147,8 +149,8 @@ public class fStock_Tag extends Fragment {
 
             SimpleAdapter simpleAdapterData;
             simpleAdapterData = new SimpleAdapter(getActivity(), MyArrList, R.layout.layout_listrow,
-                    new String[]{"r1col1","r1col2","r2col1","r2col2"}
-                    , new int[]{R.id.r1col1,R.id.r1col2,R.id.r2col1,R.id.r2col2});
+                    new String[]{"cMat","cAmount","cTagID","cLoc","cImDate"}
+                    , new int[]{R.id.colMatName,R.id.colAmount,R.id.colTagID,R.id.colLocation,R.id.colImportDate});
             lvStock.setAdapter(simpleAdapterData);
 
         } catch (JSONException e) {

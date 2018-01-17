@@ -7,54 +7,81 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/round_list">
 
         <TextView
-            android:id="@+id/r1col2"
+            android:id="@+id/colAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:text="TextView"
-            android:textColor="@color/lowSecond"
+            android:text="203 กระสอบ"
+            android:textColor="@color/text_color_secondary"
             android:theme="@style/TextNormal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.963"
-            app:layout_constraintStart_toEndOf="@+id/r1col1"
-            tools:layout_editor_absoluteY="0dp" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/colMatName"
+            app:layout_constraintTop_toTopOf="@+id/colMatName" />
 
         <TextView
-            android:id="@+id/r2col1"
+            android:id="@+id/colTagID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="TextView"
-            android:textColor="@color/lowSecond"
-            android:textSize="16sp"
+            android:layout_marginStart="16dp"
+            android:text="TagID : QPB1601010"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:theme="@style/TextNormal"
+            app:layout_constraintStart_toStartOf="@+id/colMatName"
+            app:layout_constraintTop_toBottomOf="@+id/colMatName" />
+
+        <TextView
+            android:id="@+id/colMatName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ถุงไม่พิมพ์"
+            android:textStyle="bold"
             android:theme="@style/TextNormal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/r1col1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/r1col1"
+            android:id="@+id/colLocation"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="TextView"
-            android:theme="@style/TextNormal"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <TextView
-            android:id="@+id/r2col2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
+            android:layout_height="20dp"
+            android:text="เจแอลคิทเช่นแวร์"
             android:textColor="@color/lowSecond"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:theme="@style/TextNormal"
-            app:layout_constraintEnd_toEndOf="@+id/r1col2"
-            app:layout_constraintTop_toBottomOf="@+id/r1col2" />
+            app:layout_constraintEnd_toEndOf="@+id/colAmount"
+            app:layout_constraintTop_toBottomOf="@+id/colAmount" />
+
+        <TextView
+            android:id="@+id/colImportDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="วันที่นำเข้า : 12-12-2017"
+            android:textColor="@color/lowSecond"
+            android:textSize="15sp"
+            android:theme="@style/TextNormal"
+            app:layout_constraintStart_toStartOf="@+id/colTagID"
+            app:layout_constraintTop_toBottomOf="@+id/colTagID" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="19dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:tint="@color/colorAccent"
+            app:layout_constraintEnd_toStartOf="@+id/colLocation"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/colTagID"
+            app:layout_constraintTop_toTopOf="@+id/colLocation"
+            app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
     </android.support.constraint.ConstraintLayout>
 

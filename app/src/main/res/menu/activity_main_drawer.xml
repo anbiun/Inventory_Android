@@ -19,11 +19,11 @@
             android:title="@string/nav_stock_tag" />
         <item
             android:id="@+id/nav_log_import"
-            android:icon="@android:drawable/ic_media_next"
+            android:icon="@drawable/ic_format_indent_increase_black_24dp"
             android:title="@string/nav_log_import" />
         <item
             android:id="@+id/nav_log_requisition"
-            android:icon="@android:drawable/ic_media_previous"
+            android:icon="@drawable/ic_format_indent_decrease_black_24dp"
             android:title="@string/nav_log_requisition" />
     </group>
 
@@ -42,7 +42,7 @@
             <menu>
                 <item
                     android:id="@+id/nav_changepwd"
-                    android:icon="@drawable/ic_menu_manage"
+                    android:icon="@drawable/ic_vpn_key_black_24dp"
                     android:title="@string/nav_changepwd" />
                 <item
                     android:id="@+id/nav_exit"
