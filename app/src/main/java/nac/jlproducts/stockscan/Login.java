@@ -1,12 +1,9 @@
 package nac.jlproducts.stockscan;
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,17 +14,8 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import nac.jlproducts.module;
-import nac.jlproducts.excode;
 
 public class Login extends AppCompatActivity{
     String TAG = "";
@@ -103,7 +91,7 @@ public class Login extends AppCompatActivity{
             dialog.dismiss();
         }
 
-        if (module.xcode.getCode() == excode.Cantconnect){
+        if (module.xcode.getCode() == module.xcode.Cantconnect){
             Toast.makeText(Login.this,"ติดต่อเครือข่ายไม่ได้",Toast.LENGTH_LONG).show();
             return;
         } else if (module.xcode.getCode() == module.xcode.Notfound) {
