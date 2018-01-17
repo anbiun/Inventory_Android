@@ -31,21 +31,15 @@ import nac.jlproducts.excode;
 
 public class Login extends AppCompatActivity{
     String TAG = "";
-    SoapPrimitive resultString;
     String UserID = "";
     String UserPwd = "";
 
     String SOAP_ACTION = "http://jlproducts.co.th:99/Login";
     String METHOD_NAME = "Login";
-    String NAMESPACE = "http://jlproducts.co.th:99";
-    String URL = "http://jlproducts.co.th:99/Android/Android.asmx";
-    SoapObject request = null;
-    Map<String,String> ParamList = new HashMap<String,String>();
 
     EditText getUser = null;
     EditText getPwd = null;
     public ProgressDialog dialog = null;
-    excode EXCODE = new excode();
     Intent currentPage = null;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +57,10 @@ public class Login extends AppCompatActivity{
                 UserID = getUser.getText().toString();
                 UserPwd = getPwd.getText().toString();
 
-                ParamList.put("UserID",UserID);
-                ParamList.put("UserPwd",UserPwd);
+                module.SOAP_ACTION = SOAP_ACTION;
+                module.METHOD_NAME = METHOD_NAME;
+                module.ParamList.put("UserID",UserID);
+                module.ParamList.put("UserPwd",UserPwd);
                 dialog = new ProgressDialog(Login.this);
 
 
@@ -91,7 +87,7 @@ public class Login extends AppCompatActivity{
         @Override
         protected Void doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
-            Qry();
+            module.Qry();
             return null;
         }
         @Override
@@ -101,56 +97,22 @@ public class Login extends AppCompatActivity{
         }
 
     }
-    public void Qry() {
-        try {
-            request = new SoapObject(NAMESPACE,METHOD_NAME);
 
-            for ( Map.Entry<String, String> entry : ParamList.entrySet() ) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                request.addProperty(key,value);
-            }
-
-            SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            soapEnvelope.dotNet = true;
-            soapEnvelope.setOutputSoapObject(request);
-
-            HttpTransportSE transport = new HttpTransportSE(URL);
-
-            transport.call(SOAP_ACTION, soapEnvelope);
-            resultString = (SoapPrimitive) soapEnvelope.getResponse();
-
-            Log.i(TAG, "Result From WebService: " + resultString);
-            EXCODE.Setcod(EXCODE.Success);
-        } catch (Exception ex) {
-            if (ex.getMessage().contains("unexpected end of stream")) {
-                EXCODE.Setcod(EXCODE.Cantconnect);
-            } else if (ex.getMessage().contains("Unable to resolve host")) {
-                EXCODE.Setcod(EXCODE.Cantconnect);
-            } else if (ex.getMessage().contains("Server was unable to process request.")) {
-                EXCODE.Setcod(EXCODE.CantInsert);
-            }
-            resultString = null;
-            Log.e(TAG, "Error: " + ex.getMessage());
-        }
-
-    }
     public void CheckLogin(){
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
 
-        String getVal = "";
-        if (EXCODE.Getcode() == EXCODE.Cantconnect){
+        if (module.xcode.getCode() == excode.Cantconnect){
             Toast.makeText(Login.this,"ติดต่อเครือข่ายไม่ได้",Toast.LENGTH_LONG).show();
             return;
-        } else if (EXCODE.Getcode() == EXCODE.Success && resultString.toString().equals("[]")) {
+        } else if (module.xcode.getCode() == module.xcode.Notfound) {
             Toast.makeText(Login.this,"ชื่อหรือรหัสผ่านไม่ถูกต้อง",Toast.LENGTH_LONG).show();
             return;
         }
 
         try {
-            JSONArray JAR = new JSONArray(resultString.toString());
+            JSONArray JAR = new JSONArray(module.ResultString.toString());
             JSONObject JOB = JAR.getJSONObject(0);
             module.UserName = JOB.getString("UserName");
             Intent newPage = new Intent(this,Main.class);

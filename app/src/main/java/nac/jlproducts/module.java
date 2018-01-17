@@ -77,12 +77,16 @@ public class module {
                 xcode.setCode(xcode.Success);
             }
         } catch (Exception ex) {
-            if (ex.getMessage().contains("unexpected end of stream")) {
+            if (ex != null) {
                 xcode.setCode(xcode.Cantconnect);
-            } else if (ex.getMessage().contains("Unable to resolve host")) {
-                xcode.setCode(xcode.Cantconnect);
-            } else if (ex.getMessage().contains("Server was unable to process request.")) {
-                xcode.setCode(xcode.Notfound);
+            } else {
+                if (ex.getMessage().contains("unexpected end of stream")) {
+                    xcode.setCode(xcode.Cantconnect);
+                } else if (ex.getMessage().contains("Unable to resolve host")) {
+                    xcode.setCode(xcode.Cantconnect);
+                } else if (ex.getMessage().contains("Server was unable to process request.")) {
+                    xcode.setCode(xcode.Notfound);
+                }
             }
             ResultString = null;
             Log.e(TAG, "Error: " + ex.getMessage());

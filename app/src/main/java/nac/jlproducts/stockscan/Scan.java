@@ -18,6 +18,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import nac.jlproducts.module;
+
 
 /**
  * Created by nac on 14/12/2560.
@@ -51,11 +53,11 @@ public class Scan extends Login {
     //onLoad
         currentPage = new Intent(Scan.this,Scan.class);
         currentPage.putExtra("Page","Scan");
-        btFind = (Button) findViewById(R.id.btFind);
-        btQRScan = (Button) findViewById(R.id.btQR);
-        btReq = (Button) findViewById(R.id.btRequisition);
-        TAGID = (EditText) findViewById(R.id.etTagID);
-        tvMatname = (TextView) findViewById(R.id.tvMatName);
+        btFind =  findViewById(R.id.btFind);
+        btQRScan = findViewById(R.id.btQR);
+        btReq =  findViewById(R.id.btRequisition);
+        TAGID = findViewById(R.id.etTagID);
+        tvMatname = findViewById(R.id.tvMatName);
         etUnit1 = findViewById(R.id.etUnit1);
         etUnit3 = findViewById(R.id.etUnit3);
 
@@ -78,8 +80,8 @@ public class Scan extends Login {
             public void onClick(View view) {
                 SOAP_ACTION = "http://jlproducts.co.th:99/FindTag";
                 METHOD_NAME = "FindTag";
-                ParamList.clear();
-                ParamList.put("TagID",TAGID.getText().toString());
+                module.ParamList.clear();
+                module.ParamList.put("TagID",TAGID.getText().toString());
 
                 dialog = new ProgressDialog(Scan.this);
                 GetTagTask task = new GetTagTask();
@@ -134,7 +136,7 @@ public class Scan extends Login {
         adb.setTitle("ยืนยันการเบิก?");
         adb.setMessage("คุณต้องการเบิก" + tvMatname.getText().toString() +
                 " จำนวน " + Unit1 + " " + Unit1_Name +
-                " " + Unit3 + " " + Unit3_Name
+                " กับเศษ " + Unit3 + " " + Unit3_Name
         );
 
         adb.setNegativeButton("ไม่ใช่", new AlertDialog.OnClickListener() {
@@ -148,13 +150,13 @@ public class Scan extends Login {
                 // OK Event
                 SOAP_ACTION = "http://jlproducts.co.th:99/Requisition";
                 METHOD_NAME = "Requisition";
-                ParamList.clear();
-                ParamList.put("TagID",TAGID.getText().toString());
-                ParamList.put("Unit1",Unit1);
-                ParamList.put("Unit3",Unit3);
-                ParamList.put("UserRequest", UserName);
-                ParamList.put("Unit1_ID",Unit1_ID);
-                ParamList.put("LocID",LocID);
+                module.ParamList.clear();
+                module.ParamList.put("TagID",TAGID.getText().toString());
+                module.ParamList.put("Unit1",Unit1);
+                module.ParamList.put("Unit3",Unit3);
+                module.ParamList.put("UserRequest", UserName);
+                module.ParamList.put("Unit1_ID",Unit1_ID);
+                module.ParamList.put("LocID",LocID);
 
                 dialog = new ProgressDialog(Scan.this);
                 InsertTask task = new InsertTask();
@@ -176,7 +178,7 @@ public class Scan extends Login {
     }
     private void  FoundTagID() {
     try {
-        JSONArray JAR = new JSONArray(resultString.toString());
+        JSONArray JAR = new JSONArray(module.ResultString.toString());
         JSONObject JOB = JAR.getJSONObject(0);
         Unit1_Name = JOB.getString("Unit1_Name");
         Unit3_Name = JOB.getString("Unit3_Name");
@@ -237,13 +239,13 @@ public class Scan extends Login {
         @Override
         protected Void doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
-            Qry();
+            module.Qry();
             return null;
         }
         @Override
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
-            if (resultString != null && !resultString.toString().equals("[]")) {
+            if (module.ResultString != null && !module.ResultString.toString().equals("[]")) {
                 //Toast.makeText(Login.this, "Response " + resultString.toString(), Toast.LENGTH_LONG).show();
                 dialog.dismiss();
                 FoundTagID();
@@ -271,13 +273,13 @@ public class Scan extends Login {
         @Override
         protected Void doInBackground(Void... params) {
             Log.i(TAG, "doInBackground");
-            Qry();
+            module.Qry();
             return null;
         }
         @Override
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
-            if (EXCODE.Getcode() == EXCODE.Success) {
+            if (module.xcode.getCode() == module.xcode.Success) {
                 dialog.dismiss();
                 Toast.makeText(Scan.this, "บันทึกข้อมูลเบิกแล้ว", Toast.LENGTH_LONG).show();
                 finish();
