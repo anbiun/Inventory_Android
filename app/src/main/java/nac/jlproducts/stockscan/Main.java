@@ -18,10 +18,8 @@ import android.widget.Toast;
 import nac.jlproducts.module;
 
 public class Main extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    Fragment fm = null;
     FragmentTransaction ft = null;
-    //getFragmentManager().beginTransaction();
+    Fragment fm = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,29 +47,29 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
 
     @Override
     public void onBackPressed() {
-
+        fm = null;
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
 
         } else {
-            ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.content_main,new fMain(),"main").commit();
-
-            Fragment fm = getFragmentManager().findFragmentByTag("main");
-            if (fm != null && fm.isVisible()) {
-                // add your code here
+            fm = getFragmentManager().findFragmentByTag("main");
+            if (fm !=null) {
                 if (module.backPress() == false) {
-                    Toast.makeText(this,R.string.exit_cf, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.exit_cf, Toast.LENGTH_SHORT).show();
                 } else {
                     finish();
                 }
             }
 
-
-            if (getTitle().toString().equals(R.string.title_activity_main)) {
-
+            int fmCount = getFragmentManager().getBackStackEntryCount();
+            if (fmCount > 0 ) {
+                getFragmentManager().popBackStack();
+            } else {
+                ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.content_main,new fMain(),"main").commit();
             }
+
         }
     }
 
@@ -118,7 +116,7 @@ public class Main extends AppCompatActivity implements NavigationView.OnNavigati
                 fm = new fStock_Tag();
                 break;
             case R.id.nav_log_requisition:
-                fm = new fLogReq();
+                fm = new fSetfinding();
                 break;
             case R.id.nav_exit:
                 finish();

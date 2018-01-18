@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_list"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="10dp">
+
+        <TextView
+            android:id="@+id/tvSelmat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="เลือกวัสดุ"
+            android:theme="@style/Text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvMat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="เลือกวัสดุ"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:theme="@style/Text"
+            app:layout_constraintStart_toStartOf="@+id/tvSelmat"
+            app:layout_constraintTop_toBottomOf="@+id/tvSelmat" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/round_list"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        tools:layout_editor_absoluteX="10dp">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cLaydate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvSelmat"
+            app:layout_constraintTop_toBottomOf="@+id/tvSelmat">
+
+            <TextView
+                android:id="@+id/tvSdate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text=": เลือกวันที่"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:theme="@style/Text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.021"
+                app:layout_constraintStart_toEndOf="@+id/tvS"
+                app:layout_constraintTop_toTopOf="@+id/tvS" />
+
+            <TextView
+                android:id="@+id/tvE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ถึงวันที่"
+                android:textColor="@color/text_color_secondary"
+                android:textSize="18sp"
+                android:theme="@style/Text"
+                app:layout_constraintEnd_toEndOf="@+id/tvS"
+                app:layout_constraintTop_toBottomOf="@+id/tvS" />
+
+            <TextView
+                android:id="@+id/tvS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="เริ่มวันที่"
+                android:textColor="@color/text_color_secondary"
+                android:textSize="18sp"
+                android:theme="@style/Text"
+                app:layout_constraintStart_toStartOf="@+id/tvSelmat"
+                app:layout_constraintTop_toBottomOf="@+id/tvSelmat" />
+
+            <TextView
+                android:id="@+id/tvEdate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text=": เลือกวันที่"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:theme="@style/Text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvSdate"
+                app:layout_constraintTop_toBottomOf="@+id/tvSdate" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvSelmat"
+            android:layout_width="156dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="8dp"
+            android:text="เลือกช่วงวันที่"
+            android:theme="@style/Text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/swFindall"
+            android:layout_width="135dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:text="ค้นหาทั้งหมด"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            android:theme="@style/Text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/tvSelmat"
+            app:layout_constraintTop_toTopOf="@+id/tvSelmat" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btFind"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/round_button"
+        android:text="ค้นหา"
+        android:theme="@style/Button.Primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+</android.support.constraint.ConstraintLayout>
