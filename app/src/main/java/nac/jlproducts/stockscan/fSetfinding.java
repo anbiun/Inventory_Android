@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,9 +27,17 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import nac.jlproducts.module;
+
 public class fSetfinding extends Fragment {
     @Nullable
-    boolean findall = true;
+    //boolean findall = true;
+    Switch swFind;
+    TextView sDate;
+    TextView eDate;
+    TextView tvMat;
+    public static module.findSeting fSetting;
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fsetfinding,container,false);
         //super.onCreateView(inflater, container, savedInstanceState);
@@ -36,21 +46,23 @@ public class fSetfinding extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final Switch swFind = getView().findViewById(R.id.swFindall);
-        final TextView sDate = getView().findViewById(R.id.tvSdate);
-        final TextView eDate = getView().findViewById(R.id.tvEdate);
-        final TextView tvMat = getView().findViewById(R.id.tvMat);
+        swFind = getView().findViewById(R.id.swFindall);
+        sDate = getView().findViewById(R.id.tvSdate);
+        eDate = getView().findViewById(R.id.tvEdate);
+        tvMat = getView().findViewById(R.id.tvMat);
+        fSetting = new module.findSeting();
+
 
         swFind.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 ConstraintLayout cLaydate = getView().findViewById(R.id.cLaydate);
-                if (b == true) {
+                if (b) {
                     cLaydate.setVisibility(View.GONE);
                 } else {
                     cLaydate.setVisibility(View.VISIBLE);
                 }
-                findall =b;
+                fSetting.findalldate =b;
             }
         });
         swFind.setChecked(true);
@@ -59,7 +71,7 @@ public class fSetfinding extends Fragment {
 
             @Override
             public void onClick(View view) {
-                dateRange dRange = new dateRange();
+                dateRange dRange = new dateRange(R.string.pram_sdate);
                 dRange.show(sDate);
             }
         });
@@ -67,7 +79,7 @@ public class fSetfinding extends Fragment {
         eDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dateRange dRange = new dateRange();
+                dateRange dRange = new dateRange(R.string.pram_edate);
                 dRange.show(eDate);
             }
         });
@@ -82,20 +94,20 @@ public class fSetfinding extends Fragment {
         btFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                //ft.add(new fLogReq(),R.layout.content_main,"LogReg");
-                ft.add(R.id.content_main,new fLogReq(),"LogReq");
-                ft.addToBackStack(null).commit();
+                FindClick();
             }
         });
 
     }
 
     private class dateRange {
+        private dateRange(int paramName) {
+            this.modParamSelect = paramName;
+        }
+
+        int modParamSelect = 0;
         TextView tvs = null;
         Calendar dPick = Calendar.getInstance();
-        String resReturn = ": ";
 
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -103,7 +115,7 @@ public class fSetfinding extends Fragment {
                 dPick.set(Calendar.YEAR, yy);
                 dPick.set(Calendar.MONTH, mm);
                 dPick.set(Calendar.DAY_OF_MONTH, dd);
-                updateResult(resReturn);
+                updateResult();
             }
         };
 
@@ -115,12 +127,17 @@ public class fSetfinding extends Fragment {
                         dPick.get(Calendar.DAY_OF_MONTH)).show();
         }
 
-        private void updateResult(String val) {
+        private void updateResult() {
+            String result;
             String dFormat = "dd-MM-yyyy";
             SimpleDateFormat sdf = new SimpleDateFormat(dFormat);
-            val = sdf.format(dPick.getTime());
-            resReturn += val;
-            tvs.setText(resReturn);
+            result = sdf.format(dPick.getTime());
+            if (modParamSelect == R.string.pram_sdate) {
+                fSetting.sel_sdate = result;
+            } else if (modParamSelect == R.string.pram_edate) {
+                fSetting.sel_edate = result;
+            }
+            tvs.setText(": " + result);
         }
     }
     ArrayList<String> matParam = new ArrayList<>();
@@ -145,19 +162,20 @@ public class fSetfinding extends Fragment {
         builder.setTitle(title);
 
         //final String[] listDialog = hParam.keySet().toArray(new String[0]);
-        final String[] listDialog = hParam.keySet().toArray(new String[0]);
+        final String[] listKey = hParam.keySet().toArray(new String[0]);
         checkedItems = new boolean[hParam.size()];
         Arrays.fill(checkedItems,false);
 
-        builder.setMultiChoiceItems(listDialog,checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setMultiChoiceItems(listKey,checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item, boolean checkedItems) {
                 // user checked or unchecked a box
                 //param.put(item,listLoc[item]);
-                if (checkedItems == true) {
-                    matParam.add(hParam.get(listDialog[item]));
+                if (checkedItems) {
+                    matParam.add(hParam.get(listKey[item]));
                 } else {
-                    matParam.remove(hParam.get(listDialog[item]));
+                    matParam.remove(hParam.get(listKey[item]));
+
                 }
             }
         });
@@ -168,6 +186,8 @@ public class fSetfinding extends Fragment {
 
                 TextView tv = getView().findViewById(R.id.tvMat);
                     tv.setText(getCurselect(matParam,hParam));
+                    fSetting.sel_mat = tv.getText().toString();
+                    addtoMatID(matParam);
             }
         });
         builder.setNegativeButton("Cancel", null);
@@ -175,6 +195,14 @@ public class fSetfinding extends Fragment {
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+    private void addtoMatID(ArrayList<String> matParam){
+        String newMatIDlist;
+        newMatIDlist = matParam.toString()
+                .replace("[","")
+                .replace("]","")
+                .replace(" ","");
+        fSetting.sel_matID = newMatIDlist;
     }
     private String getCurselect(ArrayList<String> inputParam, HashMap<String,String> hParam) {
         ArrayList<String> slect = new ArrayList<>();
@@ -187,6 +215,25 @@ public class fSetfinding extends Fragment {
             }
         }
         return slect.toString().replace("[","").replace("]","");
+    }
+    private void FindClick() {
+
+        if (fSetting.sel_mat.isEmpty()) {
+            Toast.makeText(getActivity(),"เลือกวัสดุ",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!fSetting.findalldate) {
+            if (fSetting.sel_mat.isEmpty()
+                || fSetting.sel_sdate.isEmpty()
+                || fSetting.sel_edate.isEmpty()) {
+                Toast.makeText(getActivity(), "ข้อมูลไม่ครบ", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } else { fSetting.sel_sdate = "ค้นหาทั้งหมด"; }
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.content_main,new fLogReq(),"LogReq");
+        ft.addToBackStack(null).commit();
     }
 
  }

@@ -134,5 +134,12 @@ public class module {
             return  false;
         }
     }
+    public static class findSeting {
+        public String sel_mat = "";
+        public String sel_matID = "";
+        public String sel_sdate = "";
+        public String sel_edate = "";
+        public boolean findalldate = true;
+    }
 }
 
