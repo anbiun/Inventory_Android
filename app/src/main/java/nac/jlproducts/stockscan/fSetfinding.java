@@ -46,6 +46,7 @@ public class fSetfinding extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle(R.string.setfinding);
         swFind = getView().findViewById(R.id.swFindall);
         sDate = getView().findViewById(R.id.tvSdate);
         eDate = getView().findViewById(R.id.tvEdate);
@@ -146,7 +147,6 @@ public class fSetfinding extends Fragment {
         String title = "กรุณาเลือก";
         final HashMap<String,String> hParam = new HashMap<>();
 
-
             matParam.clear();
             title += "วัสดุ";
             hParam.put("ซอง","0303");
@@ -171,6 +171,7 @@ public class fSetfinding extends Fragment {
             public void onClick(DialogInterface dialog, int item, boolean checkedItems) {
                 // user checked or unchecked a box
                 //param.put(item,listLoc[item]);
+
                 if (checkedItems) {
                     matParam.add(hParam.get(listKey[item]));
                 } else {
@@ -229,7 +230,7 @@ public class fSetfinding extends Fragment {
                 Toast.makeText(getActivity(), "ข้อมูลไม่ครบ", Toast.LENGTH_SHORT).show();
                 return;
             }
-        } else { fSetting.sel_sdate = "ค้นหาทั้งหมด"; }
+        } else { fSetting.sel_sdate = "ค้นหาทั้งหมด"; fSetting.sel_edate = ""; }
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.content_main,new fLogReq(),"LogReq");

@@ -22,7 +22,6 @@ public class Login extends AppCompatActivity{
     String UserID = "";
     String UserPwd = "";
 
-    String SOAP_ACTION = "http://jlproducts.co.th:99/Login";
     String METHOD_NAME = "Login";
 
     EditText getUser = null;
@@ -45,7 +44,6 @@ public class Login extends AppCompatActivity{
                 UserID = getUser.getText().toString();
                 UserPwd = getPwd.getText().toString();
 
-                module.SOAP_ACTION = SOAP_ACTION;
                 module.METHOD_NAME = METHOD_NAME;
                 module.ParamList.put("UserID",UserID);
                 module.ParamList.put("UserPwd",UserPwd);
@@ -61,7 +59,7 @@ public class Login extends AppCompatActivity{
     private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-            dialog.setMessage("กำลังโหลด..");
+            dialog.setMessage(getResources().getString(R.string.dlg_loading));
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
             try {
@@ -100,7 +98,7 @@ public class Login extends AppCompatActivity{
         }
 
         try {
-            JSONArray JAR = new JSONArray(module.ResultString.toString());
+            JSONArray JAR = new JSONArray(module.JSonResult);
             JSONObject JOB = JAR.getJSONObject(0);
             module.UserName = JOB.getString("UserName");
             Intent newPage = new Intent(this,Main.class);

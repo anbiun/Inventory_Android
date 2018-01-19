@@ -68,7 +68,6 @@ public class fStock_Tag extends Fragment {
     }
     private void getStock() {
         newMod.METHOD_NAME = "stock_tag_byall";
-        newMod.SOAP_ACTION = newMod.NAMESPACE + "/" + newMod.METHOD_NAME;
         newMod.ParamList.clear();
         newMod.ParamList.put("IDValue",matParam.toString()
                         .replace("[","")
@@ -86,7 +85,7 @@ public class fStock_Tag extends Fragment {
     }
     public class Async extends AsyncTask<Void, Void, Void> {
         protected void onPreExecute() {
-            newMod.Dialog.setMessage("กำลังโหลด..");
+            newMod.Dialog.setMessage(getResources().getString(R.string.dlg_loading));
             newMod.Dialog.setCanceledOnTouchOutside(false);
             newMod.Dialog.show();
             try {
@@ -119,7 +118,7 @@ public class fStock_Tag extends Fragment {
 
         try {
             //JSONArray data = new JSONArray(getJSON(url,params));
-            JSONArray JAR = new JSONArray(newMod.ResultString.toString());
+            JSONArray JAR = new JSONArray(newMod.JSonResult);
 
             ArrayList<HashMap<String, String>> MyArrList = new ArrayList<HashMap<String, String>>();
             HashMap<String, String> map;
@@ -148,9 +147,9 @@ public class fStock_Tag extends Fragment {
 
 
             SimpleAdapter simpleAdapterData;
-            simpleAdapterData = new SimpleAdapter(getActivity(), MyArrList, R.layout.layout_listrow,
+            simpleAdapterData = new SimpleAdapter(getActivity(), MyArrList, R.layout.listview_item_stocktag,
                     new String[]{"cMat","cAmount","cTagID","cLoc","cImDate"}
-                    , new int[]{R.id.colMatName,R.id.colAmount,R.id.colTagID,R.id.colLocation,R.id.colImportDate});
+                    , new int[]{R.id.colReqUser,R.id.colMat,R.id.colTagID,R.id.colAmount,R.id.colImportDate});
             lvStock.setAdapter(simpleAdapterData);
 
         } catch (JSONException e) {

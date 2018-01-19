@@ -94,7 +94,7 @@ public class fReq extends Fragment {
     }
     public class Async extends AsyncTask<Void, Void, Void> {
         protected void onPreExecute() {
-            nModule.Dialog.setMessage("กำลังโหลด..");
+            nModule.Dialog.setMessage(getResources().getString(R.string.dlg_loading));
             nModule.Dialog.setCanceledOnTouchOutside(false);
             nModule.Dialog.show();
             try {
@@ -117,8 +117,8 @@ public class fReq extends Fragment {
     }
     private void onPostResult() {
         Integer result = 0;
-        if (nModule.ResultString != null && !nModule.ResultString.toString().equals("[]")) {
-            //Toast.makeText(getActivity(), "Response " + nModule.ResultString.toString(), Toast.LENGTH_LONG).show();
+        if (nModule.JSonResult != null && !nModule.JSonResult.equals("[]")) {
+            //Toast.makeText(getActivity(), "Response " + nModule.JSonResult, Toast.LENGTH_LONG).show();
             nModule.Dialog.dismiss();
             result = 1;
         } else {
@@ -162,7 +162,6 @@ public class fReq extends Fragment {
 
     }
     private void findTag() {
-        nModule.SOAP_ACTION = "http://jlproducts.co.th:99/FindTag";
         nModule.METHOD_NAME = "FindTag";
         nModule.ParamList.clear();
         nModule.TagID = etTagID.getText().toString();
@@ -175,7 +174,7 @@ public class fReq extends Fragment {
     }
     private void  foundTag() {
         try {
-            JSONArray JAR = new JSONArray(nModule.ResultString.toString());
+            JSONArray JAR = new JSONArray(nModule.JSonResult);
             JSONObject JOB = JAR.getJSONObject(0);
             Unit1_Name = JOB.getString("Unit1_Name");
             Unit3_Name = JOB.getString("Unit3_Name");
@@ -249,7 +248,7 @@ public class fReq extends Fragment {
         adb.setTitle("ยืนยันการเบิก?");
         adb.setMessage("คุณต้องการเบิก" + tvMatName.getText().toString() +
                 " จำนวน " + Unit1 + " " + Unit1_Name +
-                " " + Unit3 + " " + Unit3_Name
+                " กับเศษ " + Unit3 + " " + Unit3_Name + " หรือไม่"
         );
 
         adb.setNegativeButton("ไม่ใช่", new AlertDialog.OnClickListener() {
@@ -260,7 +259,6 @@ public class fReq extends Fragment {
         adb.setPositiveButton("ใช่", new AlertDialog.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 // OK Event
-                nModule.SOAP_ACTION = "http://jlproducts.co.th:99/Requisition";
                 nModule.METHOD_NAME = "Requisition";
 
                 nModule.ParamList.clear();

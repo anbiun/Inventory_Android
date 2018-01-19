@@ -15,73 +15,68 @@
         android:background="@drawable/round_list">
 
         <TextView
-            android:id="@+id/colAmount"
+            android:id="@+id/colMat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="203 กระสอบ"
+            android:layout_marginTop="8dp"
+            android:autoText="false"
+            android:text="เบิกลังกระดาษ 194 ไม่พิมพ์"
             android:textColor="@color/text_color_secondary"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:theme="@style/TextNormal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/colMatName"
-            app:layout_constraintTop_toTopOf="@+id/colMatName" />
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/colReqUser" />
 
         <TextView
             android:id="@+id/colTagID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:text="TagID : QPB1601010"
             android:textColor="@color/colorAccent"
             android:textSize="15sp"
             android:theme="@style/TextNormal"
-            app:layout_constraintStart_toStartOf="@+id/colMatName"
-            app:layout_constraintTop_toBottomOf="@+id/colMatName" />
-
-        <TextView
-            android:id="@+id/colMatName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ถุงไม่พิมพ์"
-            android:textStyle="bold"
-            android:theme="@style/TextNormal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/colLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:text="เจแอลคิทเช่นแวร์"
-            android:textColor="@color/lowSecond"
-            android:textSize="15sp"
-            android:theme="@style/TextNormal"
-            app:layout_constraintEnd_toEndOf="@+id/colAmount"
             app:layout_constraintTop_toBottomOf="@+id/colAmount" />
 
         <TextView
-            android:id="@+id/colImportDate"
+            android:id="@+id/colReqUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="วันที่นำเข้า : 12-12-2017"
+            android:text="วรชัย"
+            android:textStyle="bold"
+            android:theme="@style/TextNormal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <TextView
+            android:id="@+id/colAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="จำนวน : 181 มัด = 1,811 ใบ"
+            android:textColor="@color/lowSecond"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:theme="@style/TextNormal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/colMat" />
+
+        <TextView
+            android:id="@+id/colReqDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="วันที่เบิก : 12-12-2017"
             android:textColor="@color/lowSecond"
             android:textSize="15sp"
             android:theme="@style/TextNormal"
-            app:layout_constraintStart_toStartOf="@+id/colTagID"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/colTagID" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="19dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:tint="@color/colorAccent"
-            app:layout_constraintEnd_toStartOf="@+id/colLocation"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/colTagID"
-            app:layout_constraintTop_toTopOf="@+id/colLocation"
-            app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
     </android.support.constraint.ConstraintLayout>
 

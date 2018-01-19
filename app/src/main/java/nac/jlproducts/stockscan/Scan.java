@@ -78,7 +78,6 @@ public class Scan extends Login {
         btFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SOAP_ACTION = "http://jlproducts.co.th:99/FindTag";
                 METHOD_NAME = "FindTag";
                 module.ParamList.clear();
                 module.ParamList.put("TagID",TAGID.getText().toString());
@@ -136,7 +135,7 @@ public class Scan extends Login {
         adb.setTitle("ยืนยันการเบิก?");
         adb.setMessage("คุณต้องการเบิก" + tvMatname.getText().toString() +
                 " จำนวน " + Unit1 + " " + Unit1_Name +
-                " กับเศษ " + Unit3 + " " + Unit3_Name
+                " กับเศษ " + Unit3 + " " + Unit3_Name + " หรือไม่"
         );
 
         adb.setNegativeButton("ไม่ใช่", new AlertDialog.OnClickListener() {
@@ -148,7 +147,6 @@ public class Scan extends Login {
         adb.setPositiveButton("ใช่", new AlertDialog.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 // OK Event
-                SOAP_ACTION = "http://jlproducts.co.th:99/Requisition";
                 METHOD_NAME = "Requisition";
                 module.ParamList.clear();
                 module.ParamList.put("TagID",TAGID.getText().toString());
@@ -178,7 +176,7 @@ public class Scan extends Login {
     }
     private void  FoundTagID() {
     try {
-        JSONArray JAR = new JSONArray(module.ResultString.toString());
+        JSONArray JAR = new JSONArray(module.JSonResult);
         JSONObject JOB = JAR.getJSONObject(0);
         Unit1_Name = JOB.getString("Unit1_Name");
         Unit3_Name = JOB.getString("Unit3_Name");
@@ -225,7 +223,7 @@ public class Scan extends Login {
     public class GetTagTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-            dialog.setMessage("กำลังโหลด..");
+            dialog.setMessage(getResources().getString(R.string.dlg_loading));
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
             try {
@@ -245,8 +243,8 @@ public class Scan extends Login {
         @Override
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
-            if (module.ResultString != null && !module.ResultString.toString().equals("[]")) {
-                //Toast.makeText(Login.this, "Response " + resultString.toString(), Toast.LENGTH_LONG).show();
+            if (module.JSonResult != null && !module.JSonResult.equals("[]")) {
+                //Toast.makeText(Login.this, "Response " + JSonResult, Toast.LENGTH_LONG).show();
                 dialog.dismiss();
                 FoundTagID();
             } else {
@@ -260,7 +258,7 @@ public class Scan extends Login {
     public class InsertTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-            dialog.setMessage("กำลังโหลด..");
+            dialog.setMessage(getResources().getString(R.string.dlg_loading));
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
             try {

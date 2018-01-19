@@ -13,6 +13,7 @@ import android.support.v7.widget.DialogTitle;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -33,23 +34,25 @@ import nac.jlproducts.stockscan.fReq;
 
 public class module {
 
-    public static String SOAP_ACTION = "http://jlproducts.co.th:99/FindTag";
-    public static String METHOD_NAME = "FindTag";
+    public static String METHOD_NAME;
     public static String NAMESPACE = "http://jlproducts.co.th:99";
     public static String URL = "http://jlproducts.co.th:99/Android/Android.asmx";
+    public static String SOAP_ACTION;
 
     public static Map<String,String> ParamList = new HashMap<String,String>();
     public static String TagID = "";
     public static String UserName = "";
     public static ProgressDialog Dialog = null;
     private static String TAG = "";
+    public static String JSonResult = "";
 
     private static SoapObject Request = null;
-    public static SoapPrimitive ResultString = null;
+    //public static SoapPrimitive ResultString = null;
 
     private static boolean doubleBack2Exit = false;
 
     public static void Qry() {
+        SOAP_ACTION = NAMESPACE + "/" + METHOD_NAME;
         //081
         try {
             Request = new SoapObject(NAMESPACE,METHOD_NAME);
@@ -67,11 +70,13 @@ public class module {
             HttpTransportSE transport = new HttpTransportSE(URL);
 
             transport.call(SOAP_ACTION, soapEnvelope);
-            ResultString = (SoapPrimitive) soapEnvelope.getResponse();
+            soapEnvelope.getResponse();
+            JSonResult = soapEnvelope.bodyIn.toString();
+            JSonResult = JSonResult.substring(JSonResult.lastIndexOf("=")+1 ,JSonResult.indexOf(";"));
 
-            Log.i(TAG, "Result From WebService: " + ResultString);
+            //ResultString = (SoapPrimitive) soapEnvelope.getResponse();
 
-            if (ResultString.toString().equals("[]")) {
+            if (JSonResult.equals("[]")) {
                 xcode.setCode(xcode.Notfound);
             } else {
                 xcode.setCode(xcode.Success);
@@ -88,7 +93,7 @@ public class module {
                     xcode.setCode(xcode.Notfound);
                 }
             }
-            ResultString = null;
+            JSonResult = "";
             Log.e(TAG, "Error: " + ex.getMessage());
         }
 

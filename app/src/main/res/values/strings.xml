@@ -34,4 +34,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pram_sdate">sDate</string>
     <string name="pram_edate">eDate</string>
+    <string name="dlg_loading">กำลังโหลด...</string>
+    <string name="setfinding">ตั้งค่าการค้นหา</string>
 </resources>
