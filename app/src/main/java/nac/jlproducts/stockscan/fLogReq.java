@@ -1,16 +1,24 @@
 package nac.jlproducts.stockscan;
 
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -29,6 +37,7 @@ import nac.jlproducts.module;
 public class fLogReq extends Fragment {
     module nMod = new module();
     ListView lvRow;
+    ConstraintLayout clayFooter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,6 +52,7 @@ public class fLogReq extends Fragment {
         Button matSelect = getView().findViewById(R.id.btListMat);
         Button dateSelect = getView().findViewById(R.id.btListLoc);
         lvRow = getView().findViewById(R.id.lvStock);
+        clayFooter = getView().findViewById(R.id.lyfooter);
 
         matSelect.setText(fSetfinding.fSetting.sel_mat);
         dateSelect.setText(fSetfinding.fSetting.sel_sdate);
@@ -67,6 +77,7 @@ public class fLogReq extends Fragment {
         });
         getLogReq();
     }
+
     private void getLogReq() {
         module nMod = new module();
         nMod.METHOD_NAME = "LogReq";
@@ -100,6 +111,7 @@ public class fLogReq extends Fragment {
             bindLV();
         }
     }
+    @SuppressLint("ClickableViewAccessibility")
     private void bindLV() {
         if (nMod.Dialog != null && nMod.Dialog.isShowing()) {
             nMod.Dialog.dismiss();
@@ -111,11 +123,10 @@ public class fLogReq extends Fragment {
         }
 
         if (module.xcode.getCode() == module.xcode.Cantconnect) {
-            Toast.makeText(getActivity(),"ติดต่อไม่ได้",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "ติดต่อไม่ได้", Toast.LENGTH_LONG).show();
             return;
         }
         if (module.xcode.getCode() == module.xcode.Success) {
-
             try {
                 //JSONArray data = new JSONArray(getJSON(url,params));
                 JSONArray JAR = new JSONArray(nMod.JSonResult);
@@ -155,6 +166,55 @@ public class fLogReq extends Fragment {
                 e.printStackTrace();
             }
         }
+
+        lvRow.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int curPos =0;
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int fRow, int i1, int i2) {
+                    if (fRow > curPos) {
+                        if (!hide) {
+                            hideMenuBar();
+                        }
+                        curPos = fRow;
+                    } else if (fRow < curPos) {
+                        if (hide) {
+                            showMenuBar();
+                        }
+
+                        curPos = fRow;
+                    }
+
+            }
+        });
+    }
+    boolean hide = false;
+    public void showMenuBar() {
+       AnimatorSet animSet = new AnimatorSet();
+
+        ObjectAnimator anim1 = ObjectAnimator.ofFloat(clayFooter
+                , View.TRANSLATION_Y, 0);
+
+        animSet.playTogether(anim1);
+        animSet.setDuration(300);
+        animSet.start();
+        hide =false;
+    }
+    public void hideMenuBar() {
+
+        AnimatorSet animSet = new AnimatorSet();
+        ObjectAnimator anim1 = ObjectAnimator.ofFloat(clayFooter
+                , View.TRANSLATION_Y, clayFooter.getHeight());
+
+        animSet.playTogether(anim1);
+        animSet.setDuration(300);
+        animSet.start();
+        hide =true;
     }
 
 }

@@ -1,5 +1,6 @@
 package nac.jlproducts.stockscan;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -28,6 +29,7 @@ public class Login extends AppCompatActivity{
     EditText getPwd = null;
     public ProgressDialog dialog = null;
     Intent currentPage = null;
+    Boolean btnLogInClick = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class Login extends AppCompatActivity{
         getUser = findViewById(R.id.txtUser);
         getPwd = findViewById(R.id.txtPwd);
 
-        Button btnLogin = (Button) findViewById(R.id.btnLogin);
+        Button btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,9 +51,10 @@ public class Login extends AppCompatActivity{
                 module.ParamList.put("UserPwd",UserPwd);
                 dialog = new ProgressDialog(Login.this);
 
-
-                AsyncCallWS task = new AsyncCallWS();
-                task.execute();
+                if (btnLogInClick == false) {
+                    AsyncCallWS task = new AsyncCallWS();
+                    task.execute();
+                }
             }
         });
 
@@ -59,6 +62,7 @@ public class Login extends AppCompatActivity{
     private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
+            btnLogInClick = true;
             dialog.setMessage(getResources().getString(R.string.dlg_loading));
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
@@ -79,6 +83,7 @@ public class Login extends AppCompatActivity{
         @Override
         protected void onPostExecute(Void result) {
             Log.i(TAG, "onPostExecute");
+            btnLogInClick = false;
             CheckLogin();
         }
 
@@ -102,6 +107,7 @@ public class Login extends AppCompatActivity{
             JSONObject JOB = JAR.getJSONObject(0);
             module.UserName = JOB.getString("UserName");
             Intent newPage = new Intent(this,Main.class);
+            //Toast.makeText(this,"select location",Toast.LENGTH_LONG).show();
             startActivity(newPage);
             finish();
 
@@ -118,6 +124,5 @@ public class Login extends AppCompatActivity{
             super.onBackPressed();
         }
     }
-
 }
 

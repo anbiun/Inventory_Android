@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linear"
@@ -9,54 +9,64 @@
     android:baselineAligned="false"
     android:orientation="vertical">
 
-    <android.support.constraint.ConstraintLayout
+    <ListView
+        android:id="@+id/lvStock"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorSecond">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btListMat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"></ListView>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/lyfooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSecond"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:foregroundGravity="bottom">
+
+        <Button
+            android:id="@+id/btListMat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="4dp"
+            android:text="เลือกประเภท"
+            android:textSize="20sp"
+            android:theme="@style/Button.Second"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btListLoc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btListLoc"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_marginEnd="4dp"
             android:text="เลือกสถานที่"
             android:textSize="20sp"
             android:theme="@style/Button.Second"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/btListMat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/btListLoc"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/btListLoc"
-            android:text="เลือกประเภท"
-            android:textSize="20sp"
-            android:theme="@style/Button.Second"
-            app:layout_constraintBottom_toTopOf="@+id/btListLoc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ListView
-            android:id="@+id/lvStock"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:background="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/btListMat"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"></ListView>
+            app:layout_constraintVertical_bias="0.0" />
+
     </android.support.constraint.ConstraintLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

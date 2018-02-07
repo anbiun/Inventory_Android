@@ -1,5 +1,7 @@
 package nac.jlproducts.stockscan;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -7,10 +9,14 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -35,8 +41,8 @@ public class fStock_Tag extends Fragment {
     ListView lvStock = null;
     ArrayList<String> locParam = new ArrayList<>();
     ArrayList<String> matParam = new ArrayList<>();
-
     String[] listDialog = null;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -155,11 +161,76 @@ public class fStock_Tag extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        lvStock.setOnTouchListener(new View.OnTouchListener() {
+                final int DISTANCE = 40;
+                float startY = 0;
+                float dist = 0;
+                boolean isMenuHide = false;
+
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+
+                if(action == MotionEvent.ACTION_DOWN) {
+                    startY = event.getY();
+                } else if(action == MotionEvent.ACTION_MOVE) {
+                    dist = event.getY() - startY;
+
+                    if((pxToDp((int)dist) <= -DISTANCE) && !isMenuHide) {
+                        isMenuHide = true;
+                        hideMenuBar();
+                    } else if((pxToDp((int)dist) > DISTANCE) && isMenuHide) {
+                        isMenuHide = false;
+                        showMenuBar();
+                    }
+
+                    if((isMenuHide && (pxToDp((int)dist) <= -DISTANCE))
+                            || (!isMenuHide && (pxToDp((int)dist) > 0))) {
+                        startY = event.getY();
+                    }
+                } else if(action == MotionEvent.ACTION_UP) {
+                    startY = 0;
+                }
+                return false;
+                //return gestureScanner.onTouchEvent(event);
+            }
+        });
+
+    }
+
+    ConstraintLayout clayFooter;
+    public int pxToDp(int px) {
+        DisplayMetrics dm = this.getResources().getDisplayMetrics();
+        int dp = Math.round(px / (dm.densityDpi
+                / DisplayMetrics.DENSITY_DEFAULT));
+        return dp;
+    }
+    public void showMenuBar() {
+        clayFooter = getView().findViewById(R.id.lyfooter);
+        AnimatorSet animSet = new AnimatorSet();
+
+        ObjectAnimator anim1 = ObjectAnimator.ofFloat(clayFooter
+                , View.TRANSLATION_Y, 0);
+
+        animSet.playTogether(anim1);
+        animSet.setDuration(300);
+        animSet.start();
+        //show =true;
+    }
+    public void hideMenuBar() {
+        clayFooter = getView().findViewById(R.id.lyfooter);
+        AnimatorSet animSet = new AnimatorSet();
+        ObjectAnimator anim1 = ObjectAnimator.ofFloat(clayFooter
+                , View.TRANSLATION_Y, clayFooter.getHeight());
+
+        animSet.playTogether(anim1);
+        animSet.setDuration(300);
+        animSet.start();
+        //show =false;
     }
 
     int checkMat = 0;
     int checkLoc = 1;
-
     private void checkDialog(final int cMode)  {
         // setup the alert builder
         String title = "กรุณาเลือก";
